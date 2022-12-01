@@ -1,0 +1,432 @@
+{
+	"info": {
+		"_postman_id": "1f7560d3-9d2d-474b-9a07-b29607d21a27",
+		"name": "Jira",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16059688"
+	},
+	"item": [
+		{
+			"name": "Create_Bug",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var resp=pm.response.json();\r",
+							"\r",
+							"pm.globals.set(\"jira_id\",resp.id);\r",
+							"pm.globals.set(\"jira_key\",resp.key);\r",
+							"console.log(resp.id);\r",
+							"console.log(resp.key);\r",
+							"\r",
+							"pm.test(\"Status code is 201,Successful creation\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "muthuvvm@gmail.com",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "Gl55ie53dcuLl7KNBiH90D8A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"fields\":{\r\n\t\t\"project\":{\r\n\t\t\t\"key\":\"TES\"\r\n\t\t},\r\n\t\t\"summary\":\"Create Bug1\",\r\n\t\t\"description\":\"Creating of an issue using project keys and issue type names using the REST API\",\r\n\t\t\"issuetype\":{\r\n\t\t\t\"name\":\"Bug\"\r\n\t\t}\r\n\t}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{JiraURL}}/rest/api/2/issue",
+					"protocol": "https",
+					"host": [
+						"{{JiraURL}}"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"issue"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search_Bug_Key",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200,Suucessful search through key\",function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "muthuvvm@gmail.com",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "Gl55ie53dcuLl7KNBiH90D8A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://muthuvvmapi.atlassian.net/rest/api/2/issue/{{jira_key}}",
+					"protocol": "https",
+					"host": [
+						"muthuvvmapi",
+						"atlassian",
+						"net"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"issue",
+						"{{jira_key}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search_Bug_id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"stauts code is 200, successful search through id\",function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "muthuvvm@gmail.com",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "Gl55ie53dcuLl7KNBiH90D8A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://muthuvvmapi.atlassian.net/rest/api/2/issue/{{jira_id}}",
+					"protocol": "https",
+					"host": [
+						"muthuvvmapi",
+						"atlassian",
+						"net"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"issue",
+						"{{jira_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit_Bug",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204 for successful edit\",function(){\r",
+							"    pm.response.to.have.status(204);\r",
+							"})\r",
+							"console.log(pm.response);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "muthuvvm@gmail.com",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "Gl55ie53dcuLl7KNBiH90D8A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fields\": {\r\n        \"description\": \"Updating Bug description with new details through EDIT services\"\r\n    }\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{JiraURL}}/rest/api/2/issue/{{jira_id}}",
+					"protocol": "https",
+					"host": [
+						"{{JiraURL}}"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"issue",
+						"{{jira_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Filter_Bug",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true,
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "muthuvvm@gmail.com",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "Gl55ie53dcuLl7KNBiH90D8A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fields\": {\r\n        \"description\": \"Bug creation Using REST API for testing\"\r\n    }\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{JiraURL}}/rest/api/2/search?jql=project=\"TestProject\"",
+					"protocol": "https",
+					"host": [
+						"{{JiraURL}}"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"search"
+					],
+					"query": [
+						{
+							"key": "jql",
+							"value": "project=\"TestProject\""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete_Bug",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "muthuvvm@gmail.com",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "Gl55ie53dcuLl7KNBiH90D8A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fields\": {\r\n        \"description\": \"Bug creation Using REST API for testing\"\r\n    }\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://{{JiraURL}}/rest/api/2/issue/{{jira_id}}",
+					"protocol": "https",
+					"host": [
+						"{{JiraURL}}"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"issue",
+						"{{jira_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search_Deleted_Bug_id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"stauts code is 404 on searching deleted issue\",function(){\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Body contains expected error message on searching deleted issue\",function(){\r",
+							"  pm.expect(pm.response.text()).to.include(\"Issue does not exist or you do not have permission to see it.\");\r",
+							"})\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "muthuvvm@gmail.com",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "Gl55ie53dcuLl7KNBiH90D8A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://muthuvvmapi.atlassian.net/rest/api/2/issue/{{jira_id}}",
+					"protocol": "https",
+					"host": [
+						"muthuvvmapi",
+						"atlassian",
+						"net"
+					],
+					"path": [
+						"rest",
+						"api",
+						"2",
+						"issue",
+						"{{jira_id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
